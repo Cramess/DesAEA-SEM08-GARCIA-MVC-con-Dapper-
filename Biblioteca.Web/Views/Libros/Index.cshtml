@@ -1,0 +1,53 @@
+@model IEnumerable<Biblioteca.Web.Models.Libro>
+@{
+    ViewData["Title"] = "Libros";
+    var tituloBusqueda = ViewData["Titulo"] as string;
+    var hayBusqueda = !string.IsNullOrWhiteSpace(tituloBusqueda);
+}
+<div class="page-header">
+    <h1>Catálogo de Libros</h1>
+    <a asp-action="Create" class="btn btn-primary" id="btn-nuevo-libro">Nuevo Libro</a>
+</div>
+<form asp-action="Index" method="get" class="search-bar" id="form-busqueda">
+    <input type="text" name="titulo" id="input-titulo" class="form-control" placeholder="Buscar por título…" value="@tituloBusqueda" />
+    <button type="submit" class="btn btn-primary" id="btn-buscar">Buscar</button>
+    @if (hayBusqueda)
+    {
+        <a asp-action="Index" class="btn btn-outline-secondary" id="btn-limpiar">Limpiar</a>
+    }
+</form>
+@if (hayBusqueda)
+{
+    <div class="alert alert-info mb-3">
+        Resultados para: <strong>«@tituloBusqueda»</strong> — @Model.Count() libro(s) encontrado(s).
+    </div>
+}
+@if (!Model.Any())
+{
+    <div class="text-center py-5 text-muted">
+        <p class="mt-2">No se encontraron libros.</p>
+    </div>
+}
+else
+{
+    <div class="table-wrapper">
+        <table class="table table-hover" id="tabla-libros">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Título</th>
+                    <th>ISBN</th>
+                    <th>Autor</th>
+                    <th class="text-center">Ejemplares</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var libro in Model)
+                {
+                    @await Html.PartialAsync("_FilaLibro", libro)
+                }
+            </tbody>
+        </table>
+    </div>
+}

@@ -1,0 +1,82 @@
+@model IEnumerable<Biblioteca.Web.Models.PrestamoReporte>
+@{
+    ViewData["Title"] = "Reporte de Préstamos";
+    var desde = ViewData["Desde"]?.ToString();
+    var hasta = ViewData["Hasta"]?.ToString();
+    var total = (int)(ViewData["Total"] ?? 0);
+}
+<div class="page-header">
+    <h1>Reporte de Préstamos</h1>
+    <a asp-action="Create" class="btn btn-primary" id="btn-nuevo-prestamo">Nuevo Préstamo</a>
+</div>
+<div class="card mb-4">
+    <div class="card-body p-3">
+        <form asp-action="Reporte" method="get" class="row g-3 align-items-end" id="form-reporte">
+            <div class="col-md-4">
+                <label for="input-desde" class="form-label fw-semibold">Desde</label>
+                <input type="date" name="desde" id="input-desde" class="form-control" value="@desde" />
+            </div>
+            <div class="col-md-4">
+                <label for="input-hasta" class="form-label fw-semibold">Hasta</label>
+                <input type="date" name="hasta" id="input-hasta" class="form-control" value="@hasta" />
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary w-100" id="btn-filtrar">Filtrar</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="mb-3 d-flex align-items-center gap-2">
+    <span class="text-muted small">Período: <strong>@desde</strong> — <strong>@hasta</strong></span>
+    <span class="badge bg-primary rounded-pill">@total registro(s)</span>
+</div>
+@if (!Model.Any())
+{
+    <div class="text-center py-5 text-muted">
+        <p class="mt-2">No hay préstamos en el período seleccionado.</p>
+    </div>
+}
+else
+{
+    <div class="table-wrapper">
+        <table class="table table-hover" id="tabla-prestamos">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Socio</th>
+                    <th>DNI</th>
+                    <th>Libro</th>
+                    <th>Autor</th>
+                    <th>Fecha Préstamo</th>
+                    <th>Fecha Límite</th>
+                    <th>Devolución</th>
+                    <th>Multa</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var p in Model)
+                {
+                    <tr id="prestamo-@p.PrestamoId-@p.TituloLibro">
+                        <td>@p.PrestamoId</td>
+                        <td class="fw-semibold">@p.NombreSocio</td>
+                        <td><code>@p.DNI</code></td>
+                        <td>@p.TituloLibro</td>
+                        <td class="text-muted small">@p.NombreAutor</td>
+                        <td>@p.FechaPrestamo.ToString("dd/MM/yyyy")</td>
+                        <td>@p.FechaLimite.ToString("dd/MM/yyyy")</td>
+                        <td>@(p.FechaDevolucion.HasValue ? p.FechaDevolucion.Value.ToString("dd/MM/yyyy") : "—")</td>
+                        <td>@(p.Multa.HasValue && p.Multa > 0 ? $"S/ {p.Multa:F2}" : "—")</td>
+                        <td>
+                            @{
+                                string badgeClass = p.Estado == "Devuelto" ? "badge-devuelto" : (p.EstaAtrasado ? "badge-atrasado" : "badge-pendiente");
+                                string badgeText  = p.Estado == "Devuelto" ? "Devuelto" : (p.EstaAtrasado ? "Atrasado" : "Pendiente");
+                            }
+                            <span class="badge-estado @badgeClass">@badgeText</span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

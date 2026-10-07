@@ -1,0 +1,32 @@
+@model Biblioteca.Web.Models.Libro
+@{
+    ViewData["Title"] = "Detalle del Libro";
+}
+<div class="page-header">
+    <h1>Detalle del Libro</h1>
+    <div class="d-flex gap-2">
+        <a asp-action="Edit" asp-route-id="@Model.LibroId" class="btn btn-warning" id="btn-editar">Editar</a>
+        <a asp-action="Index" class="btn btn-outline-secondary" id="btn-volver">Volver</a>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">Información del libro #@Model.LibroId</div>
+            <div class="card-body p-4">
+                <dl class="row mb-0">
+                    <dt class="col-4 text-muted small">Título</dt>
+                    <dd class="col-8 fw-semibold">@Model.Titulo</dd>
+                    <dt class="col-4 text-muted small">ISBN</dt>
+                    <dd class="col-8"><code>@Model.ISBN</code></dd>
+                    <dt class="col-4 text-muted small">Autor</dt>
+                    <dd class="col-8">@Model.NombreAutor</dd>
+                    <dt class="col-4 text-muted small">Ejemplares</dt>
+                    <dd class="col-8">
+                        <span class="badge bg-primary rounded-pill">@Model.Ejemplares</span>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

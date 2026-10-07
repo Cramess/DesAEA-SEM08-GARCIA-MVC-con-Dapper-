@@ -1,0 +1,42 @@
+@model Biblioteca.Web.Models.Socio
+@{
+    ViewData["Title"] = "Nuevo Socio";
+}
+<div class="page-header">
+    <h1>Nuevo Socio</h1>
+    <a asp-action="Index" class="btn btn-outline-secondary" id="btn-volver">Volver</a>
+</div>
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">Datos del socio</div>
+            <div class="card-body p-4">
+                <form asp-action="Create" method="post" id="form-crear-socio">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" id="resumen-validacion"></div>
+                    <div class="mb-3">
+                        <label asp-for="DNI" class="form-label"></label>
+                        <input asp-for="DNI" class="form-control" id="input-dni" placeholder="Ej. 12345678" />
+                        <span asp-validation-for="DNI" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Nombre" class="form-label"></label>
+                        <input asp-for="Nombre" class="form-control" id="input-nombre" placeholder="Ej. Ana Torres" />
+                        <span asp-validation-for="Nombre" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" type="email" class="form-control" id="input-email" placeholder="Ej. ana@correo.com" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary" id="btn-guardar">Guardar</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary" id="btn-cancelar">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

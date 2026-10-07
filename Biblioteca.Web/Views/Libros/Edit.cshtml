@@ -1,0 +1,50 @@
+@model Biblioteca.Web.Models.Libro
+@{
+    ViewData["Title"] = "Editar Libro";
+}
+<div class="page-header">
+    <h1>Editar Libro</h1>
+    <a asp-action="Index" class="btn btn-outline-secondary" id="btn-volver">Volver</a>
+</div>
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-header">Datos del libro</div>
+            <div class="card-body p-4">
+                <form asp-action="Edit" method="post" id="form-editar-libro">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" id="resumen-validacion"></div>
+                    <input type="hidden" asp-for="LibroId" />
+                    <div class="mb-3">
+                        <label asp-for="Titulo" class="form-label"></label>
+                        <input asp-for="Titulo" class="form-control" id="input-titulo" />
+                        <span asp-validation-for="Titulo" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="ISBN" class="form-label"></label>
+                        <input asp-for="ISBN" class="form-control" id="input-isbn" />
+                        <span asp-validation-for="ISBN" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="AutorId" class="form-label"></label>
+                        <select asp-for="AutorId" asp-items="@(ViewData["Autores"] as SelectList)" class="form-select" id="select-autor">
+                            <option value="">— Seleccione un autor —</option>
+                        </select>
+                        <span asp-validation-for="AutorId" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="Ejemplares" class="form-label"></label>
+                        <input asp-for="Ejemplares" type="number" min="1" max="999" class="form-control" id="input-ejemplares" />
+                        <span asp-validation-for="Ejemplares" class="text-danger small"></span>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-warning" id="btn-actualizar">Actualizar</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary" id="btn-cancelar">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

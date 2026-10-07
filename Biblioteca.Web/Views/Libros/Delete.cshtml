@@ -1,0 +1,37 @@
+@model Biblioteca.Web.Models.Libro
+@{
+    ViewData["Title"] = "Eliminar Libro";
+}
+<div class="page-header">
+    <h1>Eliminar Libro</h1>
+    <a asp-action="Index" class="btn btn-outline-secondary" id="btn-volver">Volver</a>
+</div>
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">Confirmar eliminación</div>
+            <div class="card-body p-4">
+                <div class="alert alert-warning mb-4">
+                    Esta acción es <strong>lógica</strong>: el libro se marcará como inactivo y no aparecerá en el catálogo, pero sus datos se conservan en la base de datos.
+                </div>
+                <dl class="row">
+                    <dt class="col-4 text-muted small">Título</dt>
+                    <dd class="col-8 fw-semibold">@Model.Titulo</dd>
+                    <dt class="col-4 text-muted small">ISBN</dt>
+                    <dd class="col-8"><code>@Model.ISBN</code></dd>
+                    <dt class="col-4 text-muted small">Autor</dt>
+                    <dd class="col-8">@Model.NombreAutor</dd>
+                    <dt class="col-4 text-muted small">Ejemplares</dt>
+                    <dd class="col-8">@Model.Ejemplares</dd>
+                </dl>
+                <form asp-action="Delete" method="post" id="form-eliminar-libro">
+                    <input type="hidden" name="id" value="@Model.LibroId" />
+                    <div class="d-flex gap-2 mt-3">
+                        <button type="submit" class="btn btn-danger" id="btn-confirmar-eliminar">Confirmar eliminación</button>
+                        <a asp-action="Index" class="btn btn-outline-secondary" id="btn-cancelar">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

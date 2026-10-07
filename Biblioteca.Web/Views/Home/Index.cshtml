@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Inicio";
+}
+<div class="hero-section">
+    <div class="hero-title">Sistema de Biblioteca</div>
+    <p class="hero-subtitle">Gestión de libros, socios y préstamos · Tecsup</p>
+</div>
+<div class="row g-4">
+    <div class="col-md-4">
+        <a asp-controller="Libros" asp-action="Index" class="stat-card" id="card-libros">
+            <div class="stat-label">Libros</div>
+            <div class="stat-desc">Catálogo, búsqueda y mantenimiento</div>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a asp-controller="Socios" asp-action="Index" class="stat-card" id="card-socios">
+            <div class="stat-label">Socios</div>
+            <div class="stat-desc">Registro y listado de miembros</div>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a asp-controller="Prestamos" asp-action="Reporte" class="stat-card" id="card-prestamos">
+            <div class="stat-label">Préstamos</div>
+            <div class="stat-desc">Reporte por intervalo de fechas</div>
+        </a>
+    </div>
+</div>

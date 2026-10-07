@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sistema de gestión de biblioteca: libros, socios y préstamos." />
+    <title>@ViewData["Title"] - Biblioteca</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Biblioteca.Web.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    <span class="brand-text">Biblioteca</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarContent" aria-controls="navbarContent"
+                        aria-expanded="false" aria-label="Alternar navegación">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index" id="nav-home">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Libros" asp-action="Index" id="nav-libros">Libros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Socios" asp-action="Index" id="nav-socios">Socios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Prestamos" asp-action="Reporte" id="nav-prestamos">Préstamos</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="main-content">
+        <div class="container py-4">
+            @if (TempData["Mensaje"] != null)
+            {
+                var tipo = TempData["TipoMensaje"]?.ToString() ?? "info";
+                <div class="alert alert-@tipo alert-dismissible fade show mb-4" role="alert">
+                    @TempData["Mensaje"]
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
+            }
+            @RenderBody()
+        </div>
+    </main>
+    <footer class="footer mt-auto py-3">
+        <div class="container text-center">
+            <span class="text-muted">© @DateTime.Now.Year Biblioteca · Tecsup · ASP.NET Core MVC + Dapper</span>
+        </div>
+    </footer>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

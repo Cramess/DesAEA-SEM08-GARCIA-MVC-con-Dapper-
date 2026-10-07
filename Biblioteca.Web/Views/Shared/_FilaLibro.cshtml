@@ -1,0 +1,17 @@
+@model Biblioteca.Web.Models.Libro
+<tr class="libro-row" id="libro-@Model.LibroId">
+    <td>@Model.LibroId</td>
+    <td><strong>@Model.Titulo</strong></td>
+    <td><code>@Model.ISBN</code></td>
+    <td>@Model.NombreAutor</td>
+    <td class="text-center">
+        <span class="badge bg-primary rounded-pill">@Model.Ejemplares</span>
+    </td>
+    <td>
+        <div class="d-flex gap-1">
+            <a asp-controller="Libros" asp-action="Details" asp-route-id="@Model.LibroId" class="btn btn-sm btn-outline-info" title="Ver detalle" id="btn-detail-@Model.LibroId">Ver</a>
+            <a asp-controller="Libros" asp-action="Edit" asp-route-id="@Model.LibroId" class="btn btn-sm btn-outline-warning" title="Editar" id="btn-edit-@Model.LibroId">Editar</a>
+            <a asp-controller="Libros" asp-action="Delete" asp-route-id="@Model.LibroId" class="btn btn-sm btn-outline-danger" title="Eliminar" id="btn-delete-@Model.LibroId">Eliminar</a>
+        </div>
+    </td>
+</tr>

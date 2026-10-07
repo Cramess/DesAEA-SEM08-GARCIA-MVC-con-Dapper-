@@ -1,0 +1,51 @@
+@model Biblioteca.Web.Models.PrestamoNuevo
+@{
+    ViewData["Title"] = "Nuevo Préstamo";
+}
+<div class="page-header">
+    <h1>Nuevo Préstamo</h1>
+    <a asp-action="Reporte" class="btn btn-outline-secondary" id="btn-volver">Volver</a>
+</div>
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">Datos del préstamo</div>
+            <div class="card-body p-4">
+                <form asp-action="Create" method="post" id="form-crear-prestamo">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" id="resumen-validacion"></div>
+                    <div class="mb-3">
+                        <label asp-for="SocioId" class="form-label"></label>
+                        <select asp-for="SocioId" asp-items="@(ViewData["Socios"] as SelectList)" class="form-select" id="select-socio">
+                            <option value="">— Seleccione un socio —</option>
+                        </select>
+                        <span asp-validation-for="SocioId" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="LibroId" class="form-label"></label>
+                        <select asp-for="LibroId" asp-items="@(ViewData["Libros"] as SelectList)" class="form-select" id="select-libro">
+                            <option value="">— Seleccione un libro —</option>
+                        </select>
+                        <span asp-validation-for="LibroId" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="FechaPrestamo" class="form-label"></label>
+                        <input asp-for="FechaPrestamo" type="date" class="form-control" id="input-fecha-prestamo" />
+                        <span asp-validation-for="FechaPrestamo" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label asp-for="FechaLimite" class="form-label"></label>
+                        <input asp-for="FechaLimite" type="date" class="form-control" id="input-fecha-limite" />
+                        <span asp-validation-for="FechaLimite" class="text-danger small"></span>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary" id="btn-guardar">Guardar</button>
+                        <a asp-action="Reporte" class="btn btn-outline-secondary" id="btn-cancelar">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
