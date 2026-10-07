@@ -1,14 +1,7 @@
--- ================================================================
--- Script de Stored Procedures para BibliotecaDB
--- Requiere: BibliotecaDB ya existente con tablas Libros, Autores,
---           Socios, Prestamos y DetallePrestamo.
--- ================================================================
+
 USE BibliotecaDB;
 GO
 
--- ================================================================
--- STORED PROCEDURES: Libros
--- ================================================================
 
 -- Listado de libros activos con nombre del autor
 CREATE OR ALTER PROCEDURE usp_Libros_Listar
@@ -93,11 +86,6 @@ BEGIN
     UPDATE Libros SET Activo = 0 WHERE LibroId = @LibroId;
 END
 GO
-
--- ================================================================
--- STORED PROCEDURES: Socios
--- ================================================================
-
 -- Listado de socios activos
 CREATE OR ALTER PROCEDURE usp_Socios_Listar
 AS
@@ -120,7 +108,6 @@ BEGIN
     VALUES (@DNI, @Nombre, @Email);
 END
 GO
-
 -- Verifica si el DNI ya existe (excluyendo al socio actual; al crear enviar @SocioId = 0)
 CREATE OR ALTER PROCEDURE usp_Socios_ExisteDNI
     @DNI     NVARCHAR(15),
@@ -132,11 +119,6 @@ BEGIN
     WHERE DNI = @DNI AND SocioId <> @SocioId AND Activo = 1;
 END
 GO
-
--- ================================================================
--- STORED PROCEDURES: Autores
--- ================================================================
-
 -- Listado de autores activos (para lista desplegable)
 CREATE OR ALTER PROCEDURE usp_Autores_Listar
 AS
@@ -147,11 +129,6 @@ BEGIN
     ORDER BY Nombre;
 END
 GO
-
--- ================================================================
--- STORED PROCEDURES: Reporte de préstamos
--- ================================================================
-
 -- Reporte de préstamos por intervalo de fechas
 CREATE OR ALTER PROCEDURE usp_Prestamos_Reporte
     @Desde DATE,
@@ -203,3 +180,17 @@ BEGIN
 END
 GO
 
+
+USE BibliotecaDB;
+GO
+
+SELECT TOP 5 AutorId, Nombre FROM Autores;
+SELECT TOP 5 LibroId, Titulo, AutorId, Ejemplares FROM Libros;
+SELECT TOP 5 SocioId, DNI, Nombre FROM Socios;
+SELECT TOP 5 PrestamoId, SocioId, FechaPrestamo, Estado FROM Prestamos;
+
+EXEC usp_Prestamos_Reporte @Desde = '2026-09-01', @Hasta = '2026-09-15';
+
+
+SELECT SocioId, Nombre FROM Socios WHERE SocioId = 10;
+SELECT * FROM DetallePrestamo;
